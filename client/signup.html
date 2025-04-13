@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diddy's Party</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Join the exclusive Diddy's Party CTF challenge!"
+    />
+    <link rel="icon" href="./assets/diddy_hotdog.jpg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="signup">
+    <div class="container">
+      <div class="welcome">
+        <h1>Diddy's Party</h1>
+        <h3>
+          Welcome to the most exclusive party in town. Register below to apply
+          for entry.
+        </h3>
+      </div>
+
+      <div class="content-row">
+        <div class="meme-banner">
+          <img
+            src="./assets/diddy_hotdog.jpg"
+            alt="Diddy's Party Meme"
+            class="meme-img"
+          />
+        </div>
+
+        <div class="form-container">
+          <h2>Sign Up</h2>
+          <form
+            action="http://localhost:8080/register"
+            method="post"
+            class="form"
+          >
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required />
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required />
+
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" required />
+
+            <button type="submit">Register</button>
+          </form>
+          <p class="toggle-link">
+            Already have an account? <a href="/login.html">Login</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="banned-notice">
+        <p>🚫 Marshall Mathers aka Eminem is banned from entering.</p>
+      </div>
+    </div>
+  </body>
+</html>
