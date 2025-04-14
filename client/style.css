@@ -18,13 +18,13 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
   text-align: center;
 }
 
 .welcome {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .welcome h1 {
@@ -44,18 +44,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   margin-bottom: 30px;
-  flex-wrap: wrap;
 }
 
 .meme-banner {
   flex: 1;
-  min-width: 300px;
+  max-width: 400px;
 }
 
 .meme-img {
-  max-width: 350px;
   width: 100%;
   height: auto;
   border-radius: 15px;
@@ -64,10 +62,6 @@ body {
     0 0 40px rgba(255, 215, 0, 0.5);
   transition: transform 0.3s ease;
   animation: pulse 2s infinite ease-in-out;
-}
-
-.meme-img:hover {
-  transform: scale(1.05);
 }
 
 @keyframes pulse {
@@ -88,6 +82,10 @@ body {
   }
 }
 
+.meme-img:hover {
+  transform: scale(1.05);
+}
+
 .form-container {
   flex: 1;
   background: rgba(255, 255, 255, 0.1);
@@ -96,12 +94,13 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   min-width: 300px;
+  max-width: 500px;
 }
 
 .form-container h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #ffd700;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .form {
@@ -109,43 +108,51 @@ body {
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
 }
 
 .form label {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #ffffff;
   text-align: left;
+  display: block;
+  margin-bottom: 5px;
 }
 
-.form input {
-  padding: 10px;
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
-  background: #ffffff;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
   color: #000000;
   font-size: 1rem;
   outline: none;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.form input:focus {
+.form input:focus,
+.form textarea:focus {
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+  background: #ffffff;
+}
+
+.form textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 .form button {
-  padding: 12px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #ff00ff;
   color: #ffffff;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    background 0.3s ease,
-    transform 0.2s ease;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .form button:hover {
@@ -153,19 +160,30 @@ body {
   transform: scale(1.05);
 }
 
+.error-message {
+  background: rgba(255, 77, 77, 0.2);
+  color: #ff4d4d;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+}
+
 .toggle-link {
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 1rem;
   color: #d4d4d4;
 }
 
-.toggle-link a {
+.toggle-link a,
+.error-message a {
   color: #ff00ff;
   text-decoration: none;
   font-weight: 600;
 }
 
-.toggle-link a:hover {
+.toggle-link a:hover,
+.error-message a:hover {
   text-decoration: underline;
   color: #cc00cc;
 }
@@ -177,35 +195,50 @@ body {
   margin-top: 20px;
 }
 
-/* Page-specific tweaks */
-body.signup {
-  /* Signup-specific styles if needed */
+.status-message {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffd700;
 }
 
-body.login {
-  /* Login-specific styles if needed */
-  /* Using same background and layout for consistency */
+/* Form page specific styles */
+body.form-page .form-container {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 /* Responsive adjustments */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .content-row {
     flex-direction: column;
+    gap: 30px;
   }
 
-  .meme-img {
+  .meme-banner {
     max-width: 300px;
   }
 
+  .form-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
   .welcome h1 {
     font-size: 2rem;
+  }
+
+  .welcome h3 {
+    font-size: 1rem;
   }
 
   .form-container {
     padding: 20px;
   }
 
-  .form {
-    max-width: 100%;
+  .form-container h2 {
+    font-size: 1.5rem;
   }
 }

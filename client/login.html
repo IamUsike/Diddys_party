@@ -11,14 +11,12 @@
     <link rel="icon" href="./assets/diddy_hotdog.jpg" />
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body class="login">
     <div class="container">
       <div class="welcome">
         <h1>Diddy's Party</h1>
         <h3>Login to get your VIP pass to the most exclusive party in town.</h3>
       </div>
-
       <div class="content-row">
         <div class="meme-banner">
           <img
@@ -27,27 +25,62 @@
             class="meme-img"
           />
         </div>
-
         <div class="form-container">
           <h2>Login</h2>
-          <form action="http://localhost:8080/login" method="post" class="form">
+          <form id="loginForm" class="form">
             <label for="username">Username :</label>
             <input type="text" name="username" id="username" required />
-
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required />
-
             <button type="submit">Login</button>
           </form>
+          <div id="error-message" class="error-message"></div>
           <p class="toggle-link">
-            Don't have an account? <a href="/index.html">Register</a>
+            Don't have an account? <a href="/signup.html">Register</a>
           </p>
         </div>
       </div>
-
       <div class="banned-notice">
         <p>🚫 Marshall Mathers aka Eminem is banned from entering.</p>
       </div>
     </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch(
+              "http://localhost:8080/api/users/login",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+                credentials: "include",
+              },
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+              window.location.href = "form.html";
+            } else {
+              document.getElementById("error-message").textContent =
+                data.message || "Login failed";
+            }
+          } catch (error) {
+            document.getElementById("error-message").textContent =
+              "An error occurred. Please try again.";
+            console.error("Login error:", error);
+          }
+        });
+    </script>
   </body>
 </html>

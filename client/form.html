@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diddy's Party - Application</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Apply to join Diddy's Party CTF challenge!"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./auth.js"></script>
+  </head>
+  <body class="form-page" onload="checkAuth()">
+    <div class="container">
+      <div class="welcome">
+        <h1>Diddy's Party</h1>
+        <h3>
+          Submit your details below, depicting why you need to attend the
+          party... you'll be let in if we deem you worthy.
+        </h3>
+      </div>
+      <div class="form-container">
+        <h2>Party Application</h2>
+        <div id="error-message" class="error-message" style="display: none">
+          You must be logged in before you submit the form.
+          <a href="./login.html">Log in</a>.
+        </div>
+        <form id="partyForm" class="form" style="display: none">
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" required />
+          <label for="age">Age:</label>
+          <input type="number" name="age" id="age" min="1" required />
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" required />
+          <label for="reasons">Your Reasons:</label>
+          <textarea name="reasons" id="reasons" rows="6" required></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <div id="submission-status" class="status-message"></div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("partyForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const formData = {
+            name: document.getElementById("name").value,
+            age: document.getElementById("age").value,
+            email: document.getElementById("email").value,
+            reasons: document.getElementById("reasons").value,
+          };
+
+          try {
+            const response = await fetch(
+              "http://localhost:8080/api/form/submit",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${getCookie("accessToken")}`,
+                },
+                body: JSON.stringify(formData),
+                credentials: "include",
+              },
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+              document.getElementById("submission-status").textContent =
+                "Your application will be reviewed by our moderators. Hold tight!";
+              document.getElementById("partyForm").reset();
+            } else {
+              document.getElementById("submission-status").textContent =
+                data.message || "Submission failed";
+            }
+          } catch (error) {
+            document.getElementById("submission-status").textContent =
+              "An error occurred. Please try again.";
+          }
+        });
+    </script>
+  </body>
+</html>
