@@ -2,6 +2,10 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import puppeteer from "puppeteer";
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Store the access token in a module-level variable
 let botAccessToken = null;
 
@@ -66,7 +70,7 @@ export const formSubmit = async (req, res) => {
     const page = await browser.newPage();
 
     // Navigate to a page first to establish context
-    await page.goto("http://localhost:5555");
+    await page.goto("http://localhost:5500");
 
     // Set the cookie with correct domain format
     await page.setCookie({
@@ -112,7 +116,7 @@ export const formSubmit = async (req, res) => {
     const content = await page.content();
     console.log("Page content:", content);
 
-    // Close the browser
+    await sleep(3000); //give time for the script to execute
     await browser.close();
 
     res.status(200).json({ success: true, message: "Form processed" });
