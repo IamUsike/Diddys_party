@@ -38,7 +38,8 @@ export const registerUser = async (req, res) => {
   const ban = ["marshall", "marshal", "mathers", "eminem"];
   if (ban.some((word) => username.toLowerCase().includes(word))) {
     return res.status(403).json({
-      message: "oi oi oi... Damare Konoyaro",
+      message: "notAllowed",
+      warning: "Oi oi oi, ikitten ja nē zo, kono yarō!",
     });
   }
 
@@ -119,6 +120,20 @@ export const loginUser = async (req, res) => {
       httpOnly: false,
       secure: false,
     };
+
+    if (
+      loggedInUser.username === "slimshady" ||
+      loggedInUser.username === "slim shady"
+    ) {
+      return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({
+          message: `Ju.. just take the flag and leave man`,
+          flag: process.env.EM_FLAG,
+        });
+    }
 
     return res
       .status(200)

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Diddy's Party</title>
+    <title>Diddy's Party - Sign Up</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
@@ -11,7 +11,6 @@
     <link rel="icon" href="./assets/diddy_hotdog.jpg" />
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body class="signup">
     <div class="container">
       <div class="welcome">
@@ -21,7 +20,6 @@
           for entry.
         </h3>
       </div>
-
       <div class="content-row">
         <div class="meme-banner">
           <img
@@ -30,34 +28,75 @@
             class="meme-img"
           />
         </div>
-
         <div class="form-container">
           <h2>Sign Up</h2>
-          <form
-            action="http://localhost:8080/api/users/register"
-            method="post"
-            class="form"
-          >
+          <form id="signupForm" class="form">
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" required />
-
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required />
-
             <label for="email">E-mail:</label>
             <input type="email" name="email" id="email" required />
-
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required />
             <button type="submit">Register</button>
           </form>
+          <div id="error-message" class="error-message"></div>
           <p class="toggle-link">
             Already have an account? <a href="/login.html">Login</a>
           </p>
         </div>
       </div>
-
       <div class="banned-notice">
         <p>🚫 Marshall Mathers aka Eminem is banned from entering.</p>
       </div>
     </div>
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          try {
+            const response = await fetch(
+              "http://localhost:8080/api/users/register",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, email, password }),
+                credentials: "include",
+              },
+            );
+            const data = await response.json();
+            if (response.ok) {
+              // Successful sign-up: redirect to login.html
+              window.location.href = "login.html";
+            } else {
+              // Handle errors
+              const errorDiv = document.getElementById("error-message");
+              if (
+                response.status === 403 &&
+                data.message === "notAllowed" &&
+                data.warning === "oi oi oi... Damare Konoyaro"
+              ) {
+                // Banned username: show delinquent.jpg and warning
+                errorDiv.innerHTML = `
+                  <img src="./assets/delinquent.jpg" alt="Anime Delinquent Warning" class="meme-img" style="max-width: 100%; margin-bottom: 10px;">
+                  <p>${data.warning}</p>
+                `;
+              } else {
+                // Other errors
+                errorDiv.textContent = data.message || "Sign up failed";
+              }
+            }
+          } catch (error) {
+            document.getElementById("error-message").textContent =
+              "An error occurred. Please try again.";
+            console.error("Sign up error:", error);
+          }
+        });
+    </script>
   </body>
 </html>

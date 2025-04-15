@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.CORS_ORIGIN, "http://127.0.0.1:5500"],
+    origin: [process.env.CORS_ORIGIN, "http://127.0.0.1:5555"],
     credentials: true,
   }),
 );
@@ -19,7 +19,10 @@ app.use(cookieParser());
 
 import userRouter from "./routes/user.route.js";
 import formRouter from "./routes/form.route.js";
+import partyRouter from "./routes/party.route.js";
+
 app.use("/api/users", userRouter);
 app.use("/api/form", formRouter);
+app.use("/api/party", partyRouter);
 
 export { app };

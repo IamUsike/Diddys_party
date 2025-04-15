@@ -44,16 +44,13 @@
         <p>🚫 Marshall Mathers aka Eminem is banned from entering.</p>
       </div>
     </div>
-
     <script>
       document
         .getElementById("loginForm")
         .addEventListener("submit", async function (event) {
           event.preventDefault();
-
           const username = document.getElementById("username").value;
           const password = document.getElementById("password").value;
-
           try {
             const response = await fetch(
               "http://localhost:8080/api/users/login",
@@ -66,11 +63,15 @@
                 credentials: "include",
               },
             );
-
             const data = await response.json();
-
             if (response.ok) {
-              window.location.href = "form.html";
+              if (data.flag) {
+                const encodedMessage = encodeURIComponent(data.message);
+                const encodedFlag = encodeURIComponent(data.flag);
+                window.location.href = `flag.html?message=${encodedMessage}&flag=${encodedFlag}`;
+              } else {
+                window.location.href = "form.html";
+              }
             } else {
               document.getElementById("error-message").textContent =
                 data.message || "Login failed";

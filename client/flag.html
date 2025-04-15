@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diddy's Party - Flag</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Flag for Diddy's Party CTF challenge" />
+    <link rel="icon" href="./assets/diddy_hotdog.jpg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- do you really think diddy will give you the flag so easily -->
+    <div class="container">
+      <div class="welcome">
+        <h1>Secret VIP Access</h1>
+        <h3>You snuck into Diddy's Party!</h3>
+      </div>
+      <div class="content-row">
+        <div class="meme-banner">
+          <img
+            src="./assets/diddy_hotdog.jpg"
+            alt="Diddy's Party Meme"
+            class="meme-img"
+          />
+        </div>
+        <div class="form-container">
+          <h2>Flag Found!</h2>
+          <div id="flag-message" class="status-message"></div>
+          <p class="toggle-link">
+            <a href="login.html">Back to Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const message = decodeURIComponent(params.get("message") || "");
+      const flag = decodeURIComponent(params.get("flag") || "");
+      if (message && flag) {
+        document.getElementById("flag-message").textContent =
+          `${message}: ${flag}`;
+      } else {
+        document.getElementById("flag-message").textContent =
+          "No flag found. Try again!";
+      }
+    </script>
+  </body>
+</html>
