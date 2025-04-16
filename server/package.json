@@ -7,7 +7,8 @@
     "mongo": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "start:all": "concurrently \"npm run mongo\" \"npm run dev\""
   },
   "keywords": [],
   "author": "",
@@ -27,5 +28,8 @@
     "puppeteer": "^24.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
