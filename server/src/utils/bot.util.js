@@ -63,7 +63,7 @@ export const formSubmit = async (req, res) => {
 
     // Launch a browser
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
       dumpio: true, // This will print browser console logs
     });
@@ -71,7 +71,7 @@ export const formSubmit = async (req, res) => {
     const page = await browser.newPage();
 
     // Navigate to a page first to establish context
-    await page.goto("http://localhost:5555");
+    await page.goto("http://localhost:3000");
 
     // Set the cookie with correct domain format
     await page.setCookie({
